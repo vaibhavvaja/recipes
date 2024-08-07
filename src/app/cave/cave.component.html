@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row">
+        <div class="cols-xs-12 text-center" id="batman-header">
+            <button [ngClass]="onClass(cave)" (click)="addCountCave()">
+                <h1>Cave</h1>
+            </button>
+            <button [ngClass]="onClass(mansion)" (click)="addCountMansion()">
+                <h1>Mansion</h1>
+            </button>
+            <button [ngClass]="onClass(batmobile)" (click)="addCountBatmobile()">
+                <h1>Batmobile</h1>
+            </button>
+            <br>
+            <p>{{count}}</p>
+        </div>
+    </div>
+</div>
+

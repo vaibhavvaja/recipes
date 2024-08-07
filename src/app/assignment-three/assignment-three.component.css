@@ -1,0 +1,19 @@
+div {
+    margin-top :20px
+}
+
+.white{
+    color : white;
+}
+
+button{
+    margin: 5px;
+}
+
+.fix {
+    margin: 25px;
+    position: relative;
+    font-size: xx-large;
+    font-weight: 700;
+    font-family: 'Times New Roman', Times, serif;
+}
