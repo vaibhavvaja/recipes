@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, input, computed } from "@angular/core";
 import { CommonModule } from "@angular/common";
 @Component({
   selector: "app-user",
@@ -8,9 +8,13 @@ import { CommonModule } from "@angular/common";
   styleUrl: "./user.component.css",
 })
 export class UserComponent {
+  //same thing using signal
+  // name = input.required<string>();
+  // avatar = input.required<string>();
+  // imagePath = computed(() => "assets/users/" + this.avatar());
+
   @Input({ required: true }) name!: string;
   @Input({ required: true }) avatar!: string;
-  // @Input({ required: true }) imagePath!: string;
 
   get imagePath() {
     return "assets/users/" + this.avatar;
