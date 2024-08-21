@@ -1,8 +1,5 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
-import { DUMMY_USERS } from "../dummy-users";
-
 @Component({
   selector: "app-user",
   standalone: true,
@@ -13,9 +10,10 @@ import { DUMMY_USERS } from "../dummy-users";
 export class UserComponent {
   @Input({ required: true }) name!: string;
   @Input({ required: true }) avatar!: string;
-  @Input({ required: true }) imagePath!: string;
+  // @Input({ required: true }) imagePath!: string;
 
-  users = DUMMY_USERS;
-
+  get imagePath() {
+    return "assets/users/" + this.avatar;
+  }
   onSelectUser() {}
 }

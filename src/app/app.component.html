@@ -3,11 +3,7 @@
 <main>
   <ul id="users">
     <li *ngFor="let user of users">
-      <app-user
-        [name]="user.name"
-        [avatar]="user.avatar"
-        [imagePath]="'assets/users/' + user.avatar"
-      />
+      <app-user [name]="user.name" [avatar]="user.avatar" />
     </li>
   </ul>
 </main>
