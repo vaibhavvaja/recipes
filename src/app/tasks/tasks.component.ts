@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+
 import { TaskComponent } from "./task/task.component";
 import { NewTaskComponent } from "./new-task/new-task.component";
+import { NewTask } from "./new-task.model";
 
 @Component({
   selector: "app-tasks",
@@ -47,7 +49,20 @@ export class TasksComponent {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
   }
 
-  onAddNewTask() {
+  onOpenTask() {
     this.addNewTask = true;
+  }
+
+  onAddTaskToList(task: NewTask) {
+    this.tasks.unshift({
+      id: new Date().getTime().toString(),
+      userId: this.id,
+      title: task.title,
+      summary: task.summary,
+      dueDate: task.dueDate,
+    });
+
+    this.addNewTask = false;
+    console.log(this.tasks);
   }
 }
