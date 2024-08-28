@@ -1,1 +1,3 @@
-<h1>HELLO</h1>
+<app-header />
+<app-user-input (annualData)="onCalculation($event)" />
+<app-investment-results [annualData]="returnsData" />
