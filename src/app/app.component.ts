@@ -12,10 +12,4 @@ import { ReturnsData } from "./returnsData.model";
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
-export class AppComponent {
-  returnsData: ReturnsData[] = [];
-
-  onCalculation(annualData: ReturnsData[]) {
-    this.returnsData = annualData;
-  }
-}
+export class AppComponent {}
