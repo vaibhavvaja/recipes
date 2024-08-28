@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input, Input, signal } from "@angular/core";
 
 import { ReturnsData } from "../returnsData.model";
 import { CommonModule } from "@angular/common";
@@ -11,5 +11,8 @@ import { CommonModule } from "@angular/common";
   styleUrl: "./investment-results.component.css",
 })
 export class InvestmentResultsComponent {
-  @Input({ required: true }) annualData!: ReturnsData[];
+  // @Input({ required: true }) annualData!: ReturnsData[];
+
+  //using signal
+  annualData = input.required<ReturnsData[]>();
 }

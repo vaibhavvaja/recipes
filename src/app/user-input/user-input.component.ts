@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, output, Output } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
 import { InvestmentResultsService } from "../investment-results/investment-results.service";
@@ -17,7 +17,10 @@ export class UserInputComponent {
   expectedReturn = 0;
   duration = 0;
 
-  @Output() annualData = new EventEmitter<ReturnsData[]>();
+  // @Output() annualData = new EventEmitter<ReturnsData[]>();
+
+  //using signal
+  annualData = output<ReturnsData[]>();
 
   constructor(private investmentResultService: InvestmentResultsService) {}
 

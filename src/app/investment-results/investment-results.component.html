@@ -1,4 +1,4 @@
-@if(annualData.length !== 0){
+@if(annualData().length !== 0){
 <table>
   <thead>
     <th>Year</th>
@@ -8,16 +8,12 @@
     <th>Invested Capital</th>
   </thead>
   <tbody>
-    @for(yearlyData of annualData; track yearlyData.year){
+    @for(yearlyData of annualData(); track yearlyData.year){
     <tr>
       <td>{{ yearlyData.year }}</td>
-
       <td>{{ yearlyData.valueEndOfYear | currency : "GBP" }}</td>
-
       <td>{{ yearlyData.interest | currency : "GBP" }}</td>
-
       <td>{{ yearlyData.totalInterest | currency : "GBP" }}</td>
-
       <td>{{ yearlyData.totalAmountInvested | currency : "GBP" }}</td>
     </tr>
     }
