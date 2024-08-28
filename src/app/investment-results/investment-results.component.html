@@ -1,4 +1,4 @@
-@if(results){
+@if(results()){
 <table>
   <thead>
     <th>Year</th>
@@ -8,7 +8,7 @@
     <th>Invested Capital</th>
   </thead>
   <tbody>
-    @for(yearlyData of results; track yearlyData.year){
+    @for(yearlyData of results(); track yearlyData.year){
     <tr>
       <td>{{ yearlyData.year }}</td>
       <td>{{ yearlyData.valueEndOfYear | currency : "GBP" }}</td>
