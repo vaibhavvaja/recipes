@@ -1,6 +1,6 @@
 import { Component, computed } from "@angular/core";
 
-import { InvestmentResultsService } from "./investment-results.service";
+import { InvestmentResultsService } from "../services/investment-results.service";
 
 @Component({
   selector: "app-investment-results",
