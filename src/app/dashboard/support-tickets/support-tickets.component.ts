@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import { CreateTicketComponent } from "./create-ticket/create-ticket.component";
 
 @Component({
-  selector: 'app-support-tickets',
+  selector: "app-support-tickets",
   standalone: true,
-  imports: [],
-  templateUrl: './support-tickets.component.html',
-  styleUrl: './support-tickets.component.css'
+  imports: [CreateTicketComponent],
+  templateUrl: "./support-tickets.component.html",
+  styleUrl: "./support-tickets.component.css",
 })
-export class SupportTicketsComponent {
-
-}
+export class SupportTicketsComponent {}
