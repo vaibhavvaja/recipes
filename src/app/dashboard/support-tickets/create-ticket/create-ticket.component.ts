@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   OnInit,
+  output,
   viewChild,
   ViewChild,
 } from "@angular/core";
@@ -21,6 +22,8 @@ export class CreateTicketComponent implements AfterViewInit, OnInit {
   @ViewChild("form") form?: ElementRef<HTMLFormElement>;
   // form = viewChild.required<ElementRef<HTMLFormElement>>("form");
 
+  add = output<{ title: string; request: string }>();
+
   ngOnInit() {
     // console.log("AFTER ON INIT");
     // console.log(this.form?.nativeElement);
@@ -31,9 +34,7 @@ export class CreateTicketComponent implements AfterViewInit, OnInit {
     // console.log(this.form?.nativeElement);
   }
   onSubmit(title: string, description: string) {
-    console.log(title);
-    console.log(description);
-    console.log(this.form);
+    this.add.emit({ title: title, request: description });
     this.form?.nativeElement.reset();
   }
 }
