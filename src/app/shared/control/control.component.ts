@@ -1,4 +1,13 @@
-import { Component, input, ViewEncapsulation } from "@angular/core";
+import {
+  AfterContentInit,
+  Component,
+  contentChild,
+  ContentChild,
+  ElementRef,
+  input,
+  OnInit,
+  ViewEncapsulation,
+} from "@angular/core";
 
 @Component({
   selector: "app-control",
@@ -9,14 +18,34 @@ import { Component, input, ViewEncapsulation } from "@angular/core";
   encapsulation: ViewEncapsulation.None,
   host: {
     class: "control",
-    "(click)": "onClick()",
+    // "(click)": "onClick()",
   },
 })
-export class ControlComponent {
+export class ControlComponent implements OnInit, AfterContentInit {
   // @HostBinding("class") className = "control";
   // @HostListener("click")
-  onClick() {
-    console.log("hello");
+  // onClick() {
+  //   console.log("hello");
+  // }
+
+  // @ContentChild("input") private control?: ElementRef<
+  //   HTMLInputElement | HTMLTextAreaElement
+  // >;
+
+  private control =
+    contentChild.required<ElementRef<HTMLInputElement | HTMLTextAreaElement>>(
+      "input"
+    );
+
+  ngOnInit() {
+    // console.log("AFTER ON INIT");
+    // console.log(this.control?.nativeElement);
   }
+
+  ngAfterContentInit() {
+    // console.log("AFTER CONTENT INIT");
+    // console.log(this.control().nativeElement);
+  }
+
   label = input.required<string>();
 }
