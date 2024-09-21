@@ -8,8 +8,7 @@ import { Task, TaskStatus } from "./task.model";
 export class TaskService {
   constructor() {}
 
-  private tasks = signal<Task[]>([]);
-  allTasks = this.tasks.asReadonly();
+  tasks: Task[] = [];
 
   addTask(title: string, description: string) {
     const task: Task = {
@@ -18,7 +17,7 @@ export class TaskService {
       description: description,
       status: "OPEN",
     };
-    this.tasks.update((oldTasks) => [...oldTasks, task]);
+    this.tasks.push(task);
   }
 
   changeTaskStatus(taskId: string, status: string) {
@@ -38,13 +37,11 @@ export class TaskService {
         break;
     }
 
-    this.tasks.set(
-      this.tasks().map((task) => {
-        if (task.id === taskId) {
-          return { ...task, status: newStatus };
-        }
-        return task;
-      })
-    );
+    this.tasks = this.tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, status: newStatus };
+      }
+      return task;
+    });
   }
 }

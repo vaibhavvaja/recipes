@@ -11,29 +11,24 @@ import { TaskService } from "../task.service";
   imports: [TaskItemComponent],
 })
 export class TasksListComponent {
-  selectedFilter = signal<string>("all");
+  selectedFilter = "all";
   taskService = inject(TaskService);
-
-  tasks = computed(() => {
-    switch (this.selectedFilter()) {
+  get tasks() {
+    switch (this.selectedFilter) {
       case "open":
-        return this.taskService
-          .allTasks()
-          .filter((task) => task.status === "OPEN");
+        return this.taskService.tasks.filter((task) => task.status === "OPEN");
       case "in-progress":
-        return this.taskService
-          .allTasks()
-          .filter((task) => task.status === "IN_PROGRESS");
+        return this.taskService.tasks.filter(
+          (task) => task.status === "IN_PROGRESS"
+        );
       case "done":
-        return this.taskService
-          .allTasks()
-          .filter((task) => task.status === "DONE");
+        return this.taskService.tasks.filter((task) => task.status === "DONE");
       default:
-        return this.taskService.allTasks();
+        return this.taskService.tasks;
     }
-  });
+  }
 
   onChangeTasksFilter(filter: string) {
-    this.selectedFilter.set(filter);
+    this.selectedFilter = filter;
   }
 }

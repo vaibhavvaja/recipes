@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from "@angular/core";
+import { Component, computed, inject, Input, input } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
 import { Task, TaskStatus } from "../../task.model";
@@ -13,9 +13,9 @@ import { TaskService } from "../../task.service";
 })
 export class TaskItemComponent {
   taskService = inject(TaskService);
-  task = input.required<Task>();
-  taskStatus = computed(() => {
-    switch (this.task().status) {
+  @Input({ required: true }) task!: Task;
+  get taskStatus() {
+    switch (this.task.status) {
       case "OPEN":
         return "Open";
       case "IN_PROGRESS":
@@ -25,7 +25,7 @@ export class TaskItemComponent {
       default:
         return "Open";
     }
-  });
+  }
 
   onChangeTaskStatus(taskId: string, status: string) {
     this.taskService.changeTaskStatus(taskId, status);
