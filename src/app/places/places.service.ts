@@ -52,7 +52,22 @@ export class PlacesService {
       );
   }
 
-  removeUserPlace(place: Place) {}
+  removeUserPlace(place: Place) {
+    const prevPlaces = this.userPlaces();
+
+    this.userPlaces.set(this.userPlaces().filter((p) => p.id !== place.id));
+
+    return this.httpClient
+      .delete(`http://localhost:3000/user-places/${place.id}`)
+      .pipe(
+        catchError((err) => {
+          this.userPlaces.set([...prevPlaces]);
+          return throwError(() => {
+            new Error("error deleting the place to fav places");
+          });
+        })
+      );
+  }
 
   fetchPlaces(url: string, message: string) {
     return this.httpClient.get<{ places: Place[] }>(url).pipe(

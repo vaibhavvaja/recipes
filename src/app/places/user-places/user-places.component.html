@@ -4,7 +4,7 @@
     Please wait! Your Favorite places are getting load......
   </p>
   } @if (places()) {
-  <app-places [places]="places()!" />
+  <app-places [places]="places()!" (selectPlace)="onDeletePlace($event)" />
   } @else if (!!places()) {
   <p class="fallback-text">No places is saved.</p>
   }
