@@ -1,16 +1,13 @@
 import { Component, DestroyRef, inject, OnInit, signal } from "@angular/core";
 
 import { Place } from "../place.model";
-import { PlacesComponent } from "../places.component";
-import { PlacesContainerComponent } from "../places-container/places-container.component";
 import { PlacesService } from "../places.service";
 
 @Component({
   selector: "app-available-places",
-  standalone: true,
+  standalone: false,
   templateUrl: "./available-places.component.html",
   styleUrl: "./available-places.component.css",
-  imports: [PlacesComponent, PlacesContainerComponent],
 })
 export class AvailablePlacesComponent implements OnInit {
   places = signal<Place[] | undefined>(undefined);
