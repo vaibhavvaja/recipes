@@ -44,9 +44,7 @@ export class AvailablePlacesComponent implements OnInit {
         next: (places) => {
           console.log(places);
         },
-        error: (err) => {
-          console.log(err.message);
-        },
+        error: (err) => {},
       });
 
     this.destroyRef.onDestroy(() => {

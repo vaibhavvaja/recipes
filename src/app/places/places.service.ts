@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, map, tap, throwError } from "rxjs";
 
 import { Place } from "./place.model";
+import { ErrorService } from "../shared/error.service";
 
 @Injectable({
   providedIn: "root",
@@ -10,6 +11,7 @@ import { Place } from "./place.model";
 export class PlacesService {
   private userPlaces = signal<Place[]>([]);
   private httpClient = inject(HttpClient);
+  private errorService = inject(ErrorService);
 
   loadedUserPlaces = this.userPlaces.asReadonly();
 
@@ -45,9 +47,10 @@ export class PlacesService {
       .pipe(
         catchError((err) => {
           this.userPlaces.set([...prevPlaces]);
-          return throwError(() => {
-            new Error("error adding the place to fav places");
-          });
+          this.errorService.showError("error adding the place to fav places");
+          return throwError(
+            () => new Error("error adding the place to fav places")
+          );
         })
       );
   }
@@ -62,8 +65,11 @@ export class PlacesService {
       .pipe(
         catchError((err) => {
           this.userPlaces.set([...prevPlaces]);
+          this.errorService.showError(
+            "error deleting the place from fav places"
+          );
           return throwError(() => {
-            new Error("error deleting the place to fav places");
+            return new Error("error deleting the place from fav places");
           });
         })
       );
@@ -73,7 +79,10 @@ export class PlacesService {
     return this.httpClient.get<{ places: Place[] }>(url).pipe(
       map((response) => response.places),
       catchError((err) => {
-        return throwError(() => new Error(message));
+        this.errorService.showError(message);
+        return throwError(() => {
+          new Error(err.message);
+        });
       })
     );
   }
