@@ -21,9 +21,6 @@ export class AvailablePlacesComponent implements OnInit {
       next: (places) => {
         this.places.set(places);
       },
-      error: (err) => {
-        console.log(err.message);
-      },
       complete: () => {
         this.isFetching.set(false);
       },
@@ -37,12 +34,7 @@ export class AvailablePlacesComponent implements OnInit {
   onSelectPlace(place: Place) {
     const subscription = this.placesService
       .addPlaceToUserPlaces(place)
-      .subscribe({
-        next: (places) => {
-          console.log(places);
-        },
-        error: (err) => {},
-      });
+      .subscribe();
 
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();

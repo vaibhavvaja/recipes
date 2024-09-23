@@ -38,6 +38,8 @@ export class PlacesService {
 
     if (!this.userPlaces().some((p) => p.id === place.id)) {
       this.userPlaces.set([...this.userPlaces(), place]);
+    } else {
+      this.errorService.showError("Already added to fav places");
     }
 
     return this.httpClient
