@@ -31,4 +31,9 @@
 
     <button class="button">Login</button>
   </div>
+  @if(email.invalid && email.touched && email.dirty){
+  <p>Email Not correct</p>
+  } @if(password.invalid && password.touched && password.dirty){
+  <p>Password Not correct</p>
+  }
 </form>
