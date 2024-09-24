@@ -1,10 +1,22 @@
 import { Component } from "@angular/core";
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
+
+const passwordMatchingValidator = (control: AbstractControl) => {
+  const formGroup = control.parent;
+  if (!formGroup) return { someError: true };
+
+  const prevEnteredPassword = formGroup.get("password")?.value;
+  if (prevEnteredPassword !== control.value) {
+    return { passwordsNotMatching: true };
+  }
+  return null;
+};
 
 @Component({
   selector: "app-signup",
@@ -21,10 +33,14 @@ export class SignupComponent {
     password: new FormControl("", {
       validators: [Validators.required, Validators.minLength(6)],
     }),
+    confirmPassword: new FormControl("", {
+      validators: [Validators.required, passwordMatchingValidator],
+    }),
   });
 
   enteredEmail = this.form.controls.email;
   enteredPassword = this.form.controls.password;
+  confirmPassword = this.form.controls.confirmPassword;
 
   get isEmailInvalid() {
     return (
@@ -39,6 +55,14 @@ export class SignupComponent {
       this.enteredPassword.invalid &&
       this.enteredPassword.dirty &&
       this.enteredPassword.touched
+    );
+  }
+
+  get isPasswordMatching() {
+    return (
+      this.confirmPassword.invalid &&
+      this.confirmPassword.dirty &&
+      this.confirmPassword.touched
     );
   }
 
