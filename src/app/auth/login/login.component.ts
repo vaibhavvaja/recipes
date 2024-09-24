@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, DestroyRef, inject, OnInit } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
@@ -30,6 +30,7 @@ const existingEmailValidator = (control: AbstractControl) => {
   styleUrl: "./login.component.css",
 })
 export class LoginComponent implements OnInit {
+  destroyRef = inject(DestroyRef);
   form = new FormGroup({
     email: new FormControl("", {
       validators: [Validators.email, Validators.required],
@@ -51,12 +52,18 @@ export class LoginComponent implements OnInit {
       this.form.controls.email.patchValue(savedEmail.email);
     }
 
-    this.form.controls.email.valueChanges.pipe(debounceTime(500)).subscribe({
-      next: (val) =>
-        window.sessionStorage.setItem(
-          "login-saved-info",
-          JSON.stringify({ email: val })
-        ),
+    const subscription = this.form.controls.email.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe({
+        next: (val) =>
+          window.sessionStorage.setItem(
+            "login-saved-info",
+            JSON.stringify({ email: val })
+          ),
+      });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
     });
   }
 
