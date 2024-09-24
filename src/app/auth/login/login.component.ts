@@ -1,13 +1,12 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidatorFn,
   Validators,
 } from "@angular/forms";
-import { of } from "rxjs";
+import { debounceTime, of } from "rxjs";
 
 const questionMarkValidator = (control: AbstractControl) => {
   if (control.value.includes("?")) {
@@ -30,7 +29,7 @@ const existingEmailValidator = (control: AbstractControl) => {
   templateUrl: "./login.component.html",
   styleUrl: "./login.component.css",
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   form = new FormGroup({
     email: new FormControl("", {
       validators: [Validators.email, Validators.required],
@@ -44,6 +43,22 @@ export class LoginComponent {
       ],
     }),
   });
+
+  ngOnInit() {
+    const savedLoginInfo = window.sessionStorage.getItem("login-saved-info");
+    if (savedLoginInfo) {
+      const savedEmail = JSON.parse(savedLoginInfo);
+      this.form.controls.email.patchValue(savedEmail.email);
+    }
+
+    this.form.controls.email.valueChanges.pipe(debounceTime(500)).subscribe({
+      next: (val) =>
+        window.sessionStorage.setItem(
+          "login-saved-info",
+          JSON.stringify({ email: val })
+        ),
+    });
+  }
 
   onSubmit() {
     if (this.form.valid) {
