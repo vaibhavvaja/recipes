@@ -10,7 +10,7 @@
     }
   </div>
 
-  <div class="control-row">
+  <div class="control-row" formGroupName="passwords">
     <div class="control">
       <label for="password">Password</label>
       <input
@@ -19,11 +19,6 @@
         name="password"
         formControlName="password"
       />
-      @if(isPasswordInvalid){
-      <p class="control-error">
-        Password is not meeting requirement of minimum length of 6
-      </p>
-      }
     </div>
 
     <div class="control">
@@ -34,12 +29,11 @@
         name="confirm-password"
         formControlName="confirmPassword"
       />
-      @if(isPasswordMatching){
-      <p class="control-error">Password is not matching</p>
-      }
     </div>
   </div>
-
+  @if(isPasswordMatching){
+  <p class="control-error">Password is not matching</p>
+  }
   <hr />
 
   <div>

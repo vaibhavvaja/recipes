@@ -7,15 +7,16 @@ import {
   Validators,
 } from "@angular/forms";
 
-const passwordMatchingValidator = (control: AbstractControl) => {
-  const formGroup = control.parent;
-  if (!formGroup) return { someError: true };
+const passwordMatchingValidator = (control1: string, control2: string) => {
+  return (control: AbstractControl) => {
+    const val1 = control.get(control1)?.value;
+    const val2 = control.get(control2)?.value;
 
-  const prevEnteredPassword = formGroup.get("password")?.value;
-  if (prevEnteredPassword !== control.value) {
-    return { passwordsNotMatching: true };
-  }
-  return null;
+    if (val1 !== val2) {
+      return { valuesNotMatching: true };
+    }
+    return null;
+  };
 };
 
 @Component({
@@ -30,12 +31,19 @@ export class SignupComponent {
     email: new FormControl("", {
       validators: [Validators.email, Validators.required],
     }),
-    password: new FormControl("", {
-      validators: [Validators.required, Validators.minLength(6)],
-    }),
-    confirmPassword: new FormControl("", {
-      validators: [Validators.required, passwordMatchingValidator],
-    }),
+    passwords: new FormGroup(
+      {
+        password: new FormControl("", {
+          validators: [Validators.required, Validators.minLength(6)],
+        }),
+        confirmPassword: new FormControl("", {
+          validators: [Validators.required, Validators.minLength(6)],
+        }),
+      },
+      {
+        validators: [passwordMatchingValidator("password", "confirmPassword")],
+      }
+    ),
     firstName: new FormControl("", {
       validators: [Validators.required],
     }),
@@ -72,8 +80,7 @@ export class SignupComponent {
   });
 
   enteredEmail = this.form.controls.email;
-  enteredPassword = this.form.controls.password;
-  confirmPassword = this.form.controls.confirmPassword;
+  passwords = this.form.controls.passwords;
 
   get isEmailInvalid() {
     return (
@@ -83,19 +90,13 @@ export class SignupComponent {
     );
   }
 
-  get isPasswordInvalid() {
-    return (
-      this.enteredPassword.invalid &&
-      this.enteredPassword.dirty &&
-      this.enteredPassword.touched
-    );
-  }
-
   get isPasswordMatching() {
     return (
-      this.confirmPassword.invalid &&
-      this.confirmPassword.dirty &&
-      this.confirmPassword.touched
+      this.passwords.invalid &&
+      this.passwords.controls.confirmPassword.dirty &&
+      this.passwords.controls.password.dirty &&
+      this.passwords.controls.password.touched &&
+      this.passwords.controls.confirmPassword.touched
     );
   }
 
