@@ -1,9 +1,57 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 
 @Component({
-  selector: 'app-signup',
+  selector: "app-signup",
   standalone: true,
-  templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css',
+  imports: [ReactiveFormsModule],
+  templateUrl: "./signup.component.html",
+  styleUrl: "./signup.component.css",
 })
-export class SignupComponent {}
+export class SignupComponent {
+  form = new FormGroup({
+    email: new FormControl("", {
+      validators: [Validators.email, Validators.required],
+    }),
+    password: new FormControl("", {
+      validators: [Validators.required, Validators.minLength(6)],
+    }),
+  });
+
+  enteredEmail = this.form.controls.email;
+  enteredPassword = this.form.controls.password;
+
+  get isEmailInvalid() {
+    return (
+      this.enteredEmail.invalid &&
+      this.enteredEmail.dirty &&
+      this.enteredEmail.touched
+    );
+  }
+
+  get isPasswordInvalid() {
+    return (
+      this.enteredPassword.invalid &&
+      this.enteredPassword.dirty &&
+      this.enteredPassword.touched
+    );
+  }
+
+  onSubmit() {
+    if (this.form.invalid) return;
+
+    console.log(
+      this.form.controls.email.value,
+      this.form.controls.password.value
+    );
+  }
+
+  onReset() {
+    this.form.reset();
+  }
+}
