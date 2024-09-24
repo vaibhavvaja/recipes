@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import {
   AbstractControl,
+  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -50,31 +51,29 @@ export class SignupComponent {
     lastName: new FormControl("", {
       validators: [Validators.required],
     }),
-    street: new FormControl("", {
-      validators: [Validators.required],
-    }),
-    number: new FormControl("", {
-      validators: [Validators.required],
-    }),
-    postCode: new FormControl("", {
-      validators: [Validators.required],
-    }),
-    city: new FormControl("", {
-      validators: [Validators.required],
+    address: new FormGroup({
+      street: new FormControl("", {
+        validators: [Validators.required],
+      }),
+      number: new FormControl("", {
+        validators: [Validators.required],
+      }),
+      postCode: new FormControl("", {
+        validators: [Validators.required],
+      }),
+      city: new FormControl("", {
+        validators: [Validators.required],
+      }),
     }),
     role: new FormControl("", {
       validators: [Validators.required],
     }),
-    google: new FormControl("", {
-      validators: [],
-    }),
-    friend: new FormControl("", {
-      validators: [],
-    }),
-    other: new FormControl("", {
-      validators: [],
-    }),
-    termsAndCondition: new FormControl("", {
+    source: new FormArray([
+      new FormControl(false),
+      new FormControl(false),
+      new FormControl(false),
+    ]),
+    termsAndCondition: new FormControl(false, {
       validators: [Validators.required],
     }),
   });
@@ -100,10 +99,15 @@ export class SignupComponent {
     );
   }
 
-  onSubmit() {
-    if (this.form.invalid) return;
+  get isFormInvalid() {
+    return this.form.invalid && this.form.touched;
+  }
 
-    console.log(this.form.controls);
+  onSubmit() {
+    if (this.form.invalid) {
+      this.isFormInvalid;
+    }
+    console.log(this.form.value);
   }
 
   onReset() {
