@@ -1,6 +1,5 @@
-import { Component, computed, inject, input } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
-import { UsersService } from "../users.service";
 import { RouterLink, RouterOutlet } from "@angular/router";
 
 @Component({
@@ -28,10 +27,12 @@ export class UserTasksComponent {
   //   });
   // }
 
-  userId = input.required<string>();
-  usersService = inject(UsersService);
+  // usersService = inject(UsersService);
+  // userId = input.required<string>();
+  // user = computed(
+  //   () => this.usersService.users.find((u) => u.id === this.userId())?.name
+  // );
 
-  user = computed(
-    () => this.usersService.users.find((u) => u.id === this.userId())?.name
-  );
+  @Input({ required: true }) message = "";
+  @Input({ required: true }) user = "";
 }
