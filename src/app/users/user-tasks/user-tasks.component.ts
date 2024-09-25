@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  Input,
+  OnInit,
+} from "@angular/core";
 
 import { UsersService } from "../users.service";
 import { HttpParams } from "@angular/common/http";
@@ -10,21 +17,28 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: "./user-tasks.component.html",
   styleUrl: "./user-tasks.component.css",
 })
-export class UserTasksComponent implements OnInit {
-  user = "";
+export class UserTasksComponent {
+  // user = "";
 
-  constructor(
-    private usersService: UsersService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  // constructor(
+  //   private usersService: UsersService,
+  //   private activatedRoute: ActivatedRoute
+  // ) {}
 
-  ngOnInit() {
-    this.activatedRoute.paramMap.subscribe({
-      next: (val) => {
-        this.user =
-          this.usersService.users.find((u) => u.id === val.get("userId"))
-            ?.name ?? "";
-      },
-    });
-  }
+  // ngOnInit() {
+  //   this.activatedRoute.paramMap.subscribe({
+  //     next: (val) => {
+  //       this.user =
+  //         this.usersService.users.find((u) => u.id === val.get("userId"))
+  //           ?.name ?? "";
+  //     },
+  //   });
+  // }
+
+  userId = input.required<string>();
+  usersService = inject(UsersService);
+
+  user = computed(
+    () => this.usersService.users.find((u) => u.id === this.userId())?.name
+  );
 }
