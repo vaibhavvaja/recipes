@@ -33,6 +33,14 @@ export class UserTasksComponent {
   //   () => this.usersService.users.find((u) => u.id === this.userId())?.name
   // );
 
+  // activatedRoute = inject(ActivatedRoute);
+
+  // ngOnInit(): void {
+  //   this.activatedRoute.data.subscribe({
+  //     next: (val) => console.log(val),
+  //   });
+  // }
+
   @Input({ required: true }) message = "";
   @Input({ required: true }) user = "";
 }

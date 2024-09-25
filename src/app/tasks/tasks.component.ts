@@ -13,20 +13,21 @@ import { RouterLink } from "@angular/router";
   imports: [TaskComponent, RouterLink],
 })
 export class TasksComponent {
+  // taskService = inject(TasksService);
+
+  // userTasks = computed(() => {
+  //   return this.taskService
+  //     .allTasks()
+  //     .filter((task) => task.userId === this.userId())
+  //     .sort((a, b) => {
+  //       if (this.order() === "asc") {
+  //         return a.id > b.id ? -1 : 1;
+  //       } else {
+  //         return a.id > b.id ? 1 : -1;
+  //       }
+  //     });
+  // });
   userId = input.required<string>();
   order = input<"asc" | "desc">();
-  taskService = inject(TasksService);
-
-  userTasks = computed(() => {
-    return this.taskService
-      .allTasks()
-      .filter((task) => task.userId === this.userId())
-      .sort((a, b) => {
-        if (this.order() === "asc") {
-          return a.id > b.id ? -1 : 1;
-        } else {
-          return a.id > b.id ? 1 : -1;
-        }
-      });
-  });
+  userTasks = input.required<Task[]>();
 }
