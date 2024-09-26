@@ -9,7 +9,9 @@
   <li>
     <app-task [task]="task" />
   </li>
-  } @empty {
+  } @empty { @defer(on hover){
   <p>There are no tasks yet. Start adding some!</p>
-  }
+  }@placeholder {
+  <p>Hover over to see</p>
+  } }
 </ul>
