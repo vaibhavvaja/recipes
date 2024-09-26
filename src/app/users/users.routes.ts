@@ -1,17 +1,21 @@
 import { Routes } from "@angular/router";
 import { TasksComponent } from "../tasks/tasks.component";
 import { NewTaskComponent } from "../tasks/new-task/new-task.component";
-import { resolveUserTasks } from "../resolve.functions";
+import { canLeaveNewTask, resolveUserTasks } from "../resolve.functions";
 
 export const routes: Routes = [
   { path: "", redirectTo: "tasks", pathMatch: "full" },
   {
     path: "tasks",
     component: TasksComponent,
-    runGuardsAndResolvers: "paramsOrQueryParamsChange",
+    runGuardsAndResolvers: "always",
     resolve: {
       userTasks: resolveUserTasks,
     },
   },
-  { path: "tasks/new", component: NewTaskComponent },
+  {
+    path: "tasks/new",
+    component: NewTaskComponent,
+    canDeactivate: [canLeaveNewTask],
+  },
 ];
